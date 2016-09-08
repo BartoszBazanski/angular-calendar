@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="angularCalendar">
     <head>
         <meta charset="utf-8">
         <title>Angular Calendar</title>
-        <script src="bower_components/angular/angular.js"></script>
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="index.module.js"></script>
+        <script type="text/javascript" src="app.js"></script>
     </head>
-    <body>
-
+    <body class="container" ng-controller="CalendarController as calendar">
+        <p>Today's date is: {{calendar.day.date | date : 'fullDate'}}</p>
+        <p>First day of the month is: {{calendar.firstDayOfMonth | date: 'fullDate'}}</p>
+        <p>The 10 next days will be:</p>
+        <p ng-repeat="i in calendar.months.september | limitTo: 4">{{calendar.firstDayOfMonth + calendar.dayInMilisec * (i - 1) | date : 'd'}}</p>
+        <p></p>
     </body>
 </html>
