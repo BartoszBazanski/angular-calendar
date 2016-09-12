@@ -6,13 +6,27 @@
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
         <script type="text/javascript" src="index.module.js"></script>
-        <script type="text/javascript" src="app.js"></script>
     </head>
     <body class="container" ng-controller="CalendarController as calendar">
-        <p>Today's date is: {{calendar.day.date | date : 'fullDate'}}</p>
+        <p>Today's date is: {{calendar.day | date : 'fullDate'}}</p>
         <p>First day of the month is: {{calendar.firstDayOfMonth | date: 'fullDate'}}</p>
-        <p>The 10 next days will be:</p>
-        <p ng-repeat="i in calendar.months.september | limitTo: 4">{{calendar.firstDayOfMonth + calendar.dayInMilisec * (i - 1) | date : 'd'}}</p>
-        <p></p>
+        <p>Last day of the month is: {{calendar.lastDayOfMonth | date: 'fullDate'}}</p>
+        <p>Days in month</p>
+        <table class="table">
+            <tr>
+                <td class="span2" ng-repeat="day in calendar.currentMonth">{{day | date: 'dd'}}</td>
+            </tr>
+        </table>
+        <p>Days in first week</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th ng-repeat="dayNames in calendar.weekDays">{{dayNames}}</th>
+                </tr>
+            </thead>
+            <tr>
+                <td ng-repeat="weekDay in calendar.firstWeek">{{weekDay | date: 'dd'}}</td>
+            </tr>
+        </table>
     </body>
 </html>
