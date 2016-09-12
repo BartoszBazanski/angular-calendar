@@ -21,11 +21,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th ng-repeat="dayNames in calendar.weekDays">{{dayNames}}</th>
+                    <th ng-repeat="dayNames in calendar.weekDays" class="text-center">{{dayNames}}</th>
                 </tr>
             </thead>
-            <tr>
-                <td ng-repeat="weekDay in calendar.firstWeek">{{weekDay | date: 'dd'}}</td>
+            <tr ng-repeat="week in calendar.weeks">
+                <td ng-repeat="day in week" class="text-center">{{day | date: 'dd'}}</td>
             </tr>
         </table>
     </body>
