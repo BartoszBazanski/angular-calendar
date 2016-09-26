@@ -1,0 +1,33 @@
+.table {
+    width: 65%;
+    margin: 0 auto;
+}
+.table>tbody>tr>td.days{
+    line-height: 1;
+    width: calc(100%/7);
+    font-size: .85em;
+    padding: 20px 8px;
+    cursor: pointer;
+}
+.days:hover, .table>tbody>tr>td.active:hover{
+    background-color: lightgray;
+}
+.today {
+    font-weight: bold;
+    animation: pulsate 1s infinite alternate;
+}
+th {
+    font-size: .85em;
+}
+@keyframes pulsate {
+    from {
+        color: lightred;
+        background-color: darkgray;
+        border-radius: 0;
+    }
+    to {
+        color: darkred;
+        background-color: lightgray;
+        border-radius: 5px;
+    }
+}
