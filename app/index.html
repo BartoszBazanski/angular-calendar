@@ -14,6 +14,8 @@
         <button type="button" name="button" ng-click="date.nextMonth()">Next Month</button>
 
         <calendar></calendar>
-
+        <p>{{ date.pickedDay | date: 'fullDate' }}</p>
+        <textarea name="name" value="" rows="4" cols="50" placeholder="Write your note" ng-model="date.notes[date.pickedDay]"></textarea><br>
+        <button type="submit" ng-click="data.saveNote(date.notes)"name="button">Save</button>
     </body>
 </html>

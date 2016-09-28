@@ -3,10 +3,11 @@
     angular.module('Calendar', [])
         .controller('DateCtrl', DateCtrl)
         .directive('calendar', Calendar)
-        .service('CalendarBuilderService', CalendarBuilderService);
+        .service('CalendarBuilderService', CalendarBuilderService)
+        .service('NotesService', NotesService);
 
-    DateCtrl.$inject = ['CalendarBuilderService'];
-    function DateCtrl(CalendarBuilderService) {
+    DateCtrl.$inject = ['CalendarBuilderService', 'NotesService'];
+    function DateCtrl(CalendarBuilderService, NotesService) {
         var date = this;
         date.today = new Date();
         date.day = new Date();
@@ -20,18 +21,15 @@
             date.day = new Date(date.day.getFullYear(), date.day.getMonth() - 1, 1);
             date.month = CalendarBuilderService.getDaysInMonth(date.day);
         }
+        date.showDay = function(day) {
+            return date.pickedDay = day;
+        }
+        date.pickedDay = '';
+        date.notes = NotesService.getNotes();
     }
 
     function CalendarBuilderService() {
         var service = this;
-        service.getFirstDay = function(day) {
-            var firstDay = new Date(day.getFullYear(), day.getMonth(), 1);
-            return firstDay;
-        }
-        service.getLastDay = function(day) {
-            var lastDay = new Date(day.getFullYear(), day.getMonth() + 1, 0);
-            return lastDay;
-        }
         function nextDay(baseDay) {
             return new Date(baseDay.getFullYear(),baseDay.getMonth(),baseDay.getDate() + 1);
         }
@@ -57,8 +55,18 @@
                 month.push(week);
                 week = [];
             }
-            console.log(month);
             return month;
+        }
+    }
+
+    function NotesService() {
+        var service = this;
+        var notes = {};
+        service.getNotes = function() {
+            return notes;
+        }
+        service.saveNote = function(logs) {
+            notes = logs;
         }
     }
 

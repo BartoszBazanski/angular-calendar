@@ -20,6 +20,10 @@
     background-color: lightgray;
     color: gray;
 }
+.picked-day {
+    background-color: lightgreen;
+    font-weight: bold;
+}
 th {
     font-size: .85em;
 }
