@@ -10,15 +10,16 @@
         var date = this;
         date.today = new Date();
         date.day = new Date();
-        console.log(date.day);
+        date.month = CalendarBuilderService.getDaysInMonth(date.day);
+        date.weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
         date.nextMonth = function() {
             date.day = new Date(date.day.getFullYear(), date.day.getMonth() + 1, 1);
+            date.month = CalendarBuilderService.getDaysInMonth(date.day);
         }
         date.prevMonth = function() {
             date.day = new Date(date.day.getFullYear(), date.day.getMonth() - 1, 1);
+            date.month = CalendarBuilderService.getDaysInMonth(date.day);
         }
-        // date.firstDay = CalendarBuilderService.getFirstDay(date.today);
-        // date.lastDay = CalendarBuilderService.getLastDay(date.today);
     }
 
     function CalendarBuilderService() {
@@ -31,35 +32,42 @@
             var lastDay = new Date(day.getFullYear(), day.getMonth() + 1, 0);
             return lastDay;
         }
+        function nextDay(baseDay) {
+            return new Date(baseDay.getFullYear(),baseDay.getMonth(),baseDay.getDate() + 1);
+        }
+        function prevDay(baseDay) {
+            return new Date(baseDay.getFullYear(),baseDay.getMonth(),baseDay.getDate() - 1);
+        }
+        service.getDaysInMonth = function(day) {
+            var firstDay = new Date(day.getFullYear(), day.getMonth(), 1)
+            var firstDayInCalendar = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1 - firstDay.getDay());
+            var lastDay = new Date(day.getFullYear(), day.getMonth() + 1, 0);
+            var lastDayInCalendar = new Date(lastDay.getFullYear(), lastDay.getMonth() + 1, 7 - lastDay.getDay());
+            var month = [];
+            var week = [];
+            var numberOfDaysInMonth = (firstDay.getDay() - 1) + lastDay.getDate() + lastDayInCalendar.getDate();
+            var currentMonth = false;
+            var startDay = firstDayInCalendar;
+            for(let j = 0; j < numberOfDaysInMonth / 7; j++) {
+                for(let i = 0; i <= 6; i++) {
+                    let day = nextDay(startDay);
+                    week.push(day);
+                    startDay = day;
+                }
+                month.push(week);
+                week = [];
+            }
+            console.log(month);
+            return month;
+        }
     }
 
-    Calendar.$inject = ['CalendarBuilderService'];
-    function Calendar(CalendarBuilderService) {
+    function Calendar() {
         var calendar = {
             restrict: 'E',
             templateUrl: './partials/calendar/calendar.html',
-            scope: {
-                day: '='
-            },
-            controller: CalendarDirectiveCtrl,
-            controllerAs: 'calendar',
-            bindToController: true
         }
 
         return calendar;
-    }
-    DateCtrl.$inject = ['CalendarBuilderService'];
-    function CalendarDirectiveCtrl(CalendarBuilderService) {
-        var calendar = this;
-        console.log(calendar.day);
-        // calendar.day = 'Hi';
-        console.log(calendar.day);
-        // calendar.firstDay = function() {
-        //         return CalendarBuilderService.getFirstDay(calendar.day);
-        // }
-        // calendar.lastDay = function() {
-        //     return CalendarBuilderService.getLastDay(calendar.day);
-        // }
-
     }
 })();

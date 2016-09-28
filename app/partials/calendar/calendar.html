@@ -1,9 +1,10 @@
-<p>
-    Today's date is: {{calendar.day | date : 'fullDate'}}
-</p>
-<p>
-    First day of the current month is: {{calendar.firstDay() | date : 'fullDate'}}
-</p>
-<p>
-    Last day of the current month is: {{calendar.lastDay() | date : 'fullDate'}}
-</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th ng-repeat="dayNames in date.weekDays" class="text-center">{{ dayNames }}</th>
+        </tr>
+    </thead>
+    <tr ng-repeat="week in date.month">
+        <td ng-repeat="day in week" class="text-center days" ng-class="{'active today': day.toDateString() === date.today.toDateString(), 'not-current-month': day.getMonth() !== date.day.getMonth()}">{{ day | date: 'd'}}</td>
+    </tr>
+</table>

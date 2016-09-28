@@ -8,28 +8,12 @@
         <script type="text/javascript" src="bower_components/angular/angular.js"></script>
         <script type="text/javascript" src="app.js"></script>
     </head>
-    <body class="container" ng-controller="DateCtrl as date">
+    <body class="container text-center" ng-controller="DateCtrl as date">
+        <p>{{ date.day | date: 'MMMM yyyy' }}</p>
         <button type="button" name="button" ng-click="date.prevMonth()">Previous Month</button>
         <button type="button" name="button" ng-click="date.nextMonth()">Next Month</button>
-        <p>
-            {{date.day}}
-        </p>
-        <calendar day="date.day"></calendar>
 
-        <p class="text-center">Current month: {{calendar.day | date: 'MMMM'}}</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th ng-repeat="dayNames in calendar.weekDays" class="text-center">{{dayNames}}</th>
-                </tr>
-            </thead>
-            <tr ng-repeat="week in calendar.weeks">
-                <td ng-repeat="day in week" class="text-center days" ng-class="{'active today': day.toDateString() === calendar.day.toDateString()}">{{day | date : 'd'}}</td>
-            </tr>
-        </table>
-        <input type="text" name="name" placeholder="search" ng-model="calendar.search">
-        <ul>
-            <li ng-repeat="day in calendar.weekDays | filter : calendar.search">{{day}}</li>
-        </ul>
+        <calendar></calendar>
+
     </body>
 </html>

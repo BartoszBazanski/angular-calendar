@@ -16,6 +16,10 @@
     font-weight: bold;
     animation: pulsate 1s infinite alternate;
 }
+.not-current-month {
+    background-color: lightgray;
+    color: gray;
+}
 th {
     font-size: .85em;
 }
